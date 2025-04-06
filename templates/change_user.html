@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Change User Role - DPAT{% endblock %}
+{% block content %}
+<div class="main-content">
+    <h1>Change User Role</h1>
+    <p>Adjust role for {{ user.email }}</p>
+    <form method="POST">
+        <label for="role">Role:</label>
+        <select id="role" name="role">
+            <option value="user" {% if user.role == 'user' %}selected{% endif %}>User</option>
+            <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
+        </select>
+        <button type="submit">Save</button>
+    </form>
+</div>
+{% endblock %}

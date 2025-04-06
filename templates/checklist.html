@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+{% block title %}Compliance Checklist - DPAT{% endblock %}
+{% block content %}
+<div class="main-content">
+    {% if current_user.role == 'admin' %}
+        <h1>Compliance Checklist</h1>
+        <div class="checklist-container">
+            <div class="checklist">
+                <h2>GDPR Compliance Checklist</h2>
+                <p2> Note -- Resubmitting this Checklist will reset the Compliance Score</p2>
+                <form id="checklist-form" method="POST" action="{{ url_for('checklist') }}">
+                    <!-- Lawful Basis for Processing -->
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="lawful_basis_identified" onchange="updateComplianceScore()">
+                            Have we identified and documented the lawful basis for each type of data processing (e.g., consent, contract necessity, legitimate interests)?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="lawful_basis_demonstrated" onchange="updateComplianceScore()">
+                            Are we able to demonstrate the lawful basis for processing personal data for all current and past activities?
+                        </label>
+                    </div>
+
+                    <!-- Data Minimization -->
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="data_minimization_necessary" onchange="updateComplianceScore()">
+                            Do we only collect the personal data necessary for the specified purpose(s)?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="data_minimization_review" onchange="updateComplianceScore()">
+                            Are we regularly reviewing the data we hold to ensure we are not retaining unnecessary or excessive data?
+                        </label>
+                    </div>
+
+                    <!-- Data Accuracy -->
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="data_accuracy_process" onchange="updateComplianceScore()">
+                            Do we have processes in place to ensure that the personal data we hold is accurate and up-to-date?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="data_accuracy_correction" onchange="updateComplianceScore()">
+                            Are there mechanisms to allow data subjects to correct inaccurate data?
+                        </label>
+                    </div>
+
+                    <!-- Transparency and Information to Data Subjects -->
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="transparency_notices" onchange="updateComplianceScore()">
+                            Have we provided clear, easily accessible privacy notices that explain how personal data is processed?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="transparency_details" onchange="updateComplianceScore()">
+                            Do our privacy notices specify the purposes of data processing, the lawful basis, data retention periods, and the rights of data subjects?
+                        </label>
+                    </div>
+
+                    <!-- Consent Management -->
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="consent_freely_given" onchange="updateComplianceScore()">
+                            If we rely on consent for processing personal data, is it freely given, specific, informed, and unambiguous?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="consent_management" onchange="updateComplianceScore()">
+                            Have we implemented processes for obtaining, recording, and managing consent from data subjects?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="consent_withdrawal" onchange="updateComplianceScore()">
+                            Do we provide data subjects with an easy method to withdraw consent at any time?
+                        </label>
+                    </div>
+
+                    <!-- Data Subject Rights -->
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="subject_rights_procedures" onchange="updateComplianceScore()">
+                            Do we have clear procedures for handling data subject rights requests (e.g., right to access, rectification, erasure, portability, objection)?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="subject_rights_response" onchange="updateComplianceScore()">
+                            Are we able to respond to data subject requests within the required one-month timeframe?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="subject_rights_verification" onchange="updateComplianceScore()">
+                            Have we established a process for verifying the identity of individuals making data subject rights requests?
+                        </label>
+                    </div>
+
+                    <!-- Data Retention and Disposal -->
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="retention_policy" onchange="updateComplianceScore()">
+                            Do we have a documented data retention policy that specifies retention periods for personal data?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="retention_disposal" onchange="updateComplianceScore()">
+                            Are we regularly reviewing and securely disposing of data that is no longer required or that has reached its retention period?
+                        </label>
+                    </div>
+
+                    <!-- Data Security Measures -->
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="security_measures" onchange="updateComplianceScore()">
+                            Do we have appropriate technical and organizational measures in place to protect personal data (e.g., encryption, access controls)?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="security_training" onchange="updateComplianceScore()">
+                            Are our employees trained on data security best practices, and do we have a process for reviewing and updating security measures regularly?
+                        </label>
+                    </div>
+
+                    <!-- Data Breach Response -->
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="breach_response_plan" onchange="updateComplianceScore()">
+                            Do we have an internal data breach response plan that includes procedures for identifying, containing, and reporting breaches?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="breach_notification" onchange="updateComplianceScore()">
+                            Have we implemented a system for notifying the relevant supervisory authority of data breaches within 72 hours, as required by GDPR?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="breach_subject_notification" onchange="updateComplianceScore()">
+                            Are data subjects notified of breaches when necessary?
+                        </label>
+                    </div>
+
+                    <!-- Third-Party Data Processors -->
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="third_party_contracts" onchange="updateComplianceScore()">
+                            Do we have written contracts in place with third-party data processors outlining their GDPR obligations?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="third_party_audits" onchange="updateComplianceScore()">
+                            Are we conducting due diligence and regular audits of third-party processors to ensure GDPR compliance?
+                        </label>
+                    </div>
+
+                    <!-- Data Protection Impact Assessments (DPIAs) -->
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="dpia_high_risk" onchange="updateComplianceScore()">
+                            Have we conducted DPIAs for high-risk processing activities, particularly when introducing new technologies or processing large volumes of sensitive data?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="dpia_documented" onchange="updateComplianceScore()">
+                            Are DPIAs documented, and do they include an assessment of the necessity and proportionality of the processing?
+                        </label>
+                    </div>
+
+                    <!-- Accountability and Governance -->
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="dpo_designated" onchange="updateComplianceScore()">
+                            Do we have a designated Data Protection Officer (DPO) or another responsible person/team for ensuring GDPR compliance?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="processing_records" onchange="updateComplianceScore()">
+                            Are we maintaining proper documentation of our data processing activities, including data processing records?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="internal_audits" onchange="updateComplianceScore()">
+                            Are internal audits conducted regularly to assess compliance with GDPR?
+                        </label>
+                    </div>
+
+                    <!-- International Data Transfers -->
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="data_transfer_safeguards" onchange="updateComplianceScore()">
+                            If we transfer personal data outside the European Economic Area (EEA), have we implemented adequate safeguards (e.g., Standard Contractual Clauses, Binding Corporate Rules)?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="data_transfer_assessment" onchange="updateComplianceScore()">
+                            Are we assessing the privacy and security standards of countries outside the EEA before transferring personal data?
+                        </label>
+                    </div>
+
+                    <!-- Employee Training and Awareness -->
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="employee_training" onchange="updateComplianceScore()">
+                            Are all employees who handle personal data trained on GDPR principles and data protection practices?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="ongoing_training" onchange="updateComplianceScore()">
+                            Do we provide ongoing training and updates to ensure employees remain informed about data protection responsibilities?
+                        </label>
+                    </div>
+
+                    <!-- Monitoring and Reporting -->
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="monitoring_processes" onchange="updateComplianceScore()">
+                            Do we have processes in place to monitor and report on compliance with GDPR internally?
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="checklist_items" value="gdpr_review" onchange="updateComplianceScore()">
+                            Are we regularly reviewing our GDPR practices to ensure we stay aligned with evolving legal and regulatory requirements?
+                        </label>
+                    </div>
+
+                    <button type="submit">Save/Generate To-Do List</button>
+                </form>
+            </div>
+            <div class="compliance-score">
+                <h2>Compliance Score</h2>
+                <div class="score-box" id="compliance-score">0%</div>
+            </div>
+        </div>
+        <p class="disclaimer">This checklist is visible only to admin users.</p>
+    {% else %}
+        <h1>Access Denied</h1>
+        <p>This page is restricted to admin users only. Please contact an administrator.</p>
+    {% endif %}
+</div>
+
+<script>
+    function updateComplianceScore() {
+        const checkboxes = document.querySelectorAll('input[name="checklist_items"]');
+        const totalItems = checkboxes.length;
+        const checkedItems = Array.from(checkboxes).filter(checkbox => checkbox.checked).length;
+        const score = Math.round((checkedItems / totalItems) * 100);
+        document.getElementById('compliance-score').textContent = `${score}%`;
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}To-Do List - DPAT{% endblock %}
+{% block content %}
+<div class="main-content">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <!-- Display only the first message -->
+            <div class="flash-messages" id="flash-messages">
+                <p>{{ messages[0] }}</p>
+            </div>
+        {% endif %}
+    {% endwith %}
+    <h1>To-Do List</h1>
+    {% if to_do_items %}
+        <p>Complete the following tasks to improve your compliance score:</p>
+        <table class="to-do-table">
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in to_do_items %}
+                    <tr>
+                        <td>{{ item.description }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('remove_todo', todo_id=item.id) }}">
+                                <button type="submit" class="action-button">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Congratulations! You have no outstanding tasks to improve your compliance score.</p>
+    {% endif %}
+    <a href="{{ url_for('checklist') }}" class="results-button">Back to Checklist</a>
+</div>
+
+<script>
+    // Fade out flash messages after 5 seconds
+    document.addEventListener('DOMContentLoaded', function () {
+        const flashMessages = document.getElementById('flash-messages');
+        if (flashMessages) {
+            setTimeout(() => {
+                flashMessages.style.opacity = '0';
+                setTimeout(() => {
+                    flashMessages.style.display = 'none';
+                }, 1000); // Wait for the fade-out transition to complete (1s)
+            }, 5000); // 5 seconds delay before starting the fade-out
+        }
+    });
+</script>
+{% endblock %}

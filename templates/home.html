@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Home - DPAT{% endblock %}
+{% block content %}
+<div class="main-content" style="padding: 3rem; border-radius: 10px; max-width: 900px; margin: 2rem auto;">
+    <!-- Logo Section -->
+    <div class="logo-container" style="text-align: center; margin-bottom: 3rem;">
+        <img src="{{ url_for('static', filename='images/dpat_logo.png') }}" alt="DPAT Logo" style="max-width: 400px; height: auto; margin: 0 auto;">
+    </div>
+
+    <!-- Welcome Section -->
+    <div class="welcome-section" style="text-align: center; margin-bottom: 3rem;">
+        <h1 class="welcome-text" style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
+            Welcome to the Data Privacy Analysis Tool
+        </h1>
+        <p style="font-size: 1.3rem; max-width: 800px; margin: 0 auto; line-height: 1.6;">
+            DPAT helps organizations ensure compliance with EU data privacy regulations, including GDPR, through comprehensive assessments, checklists, and resources.
+        </p>
+    </div>
+
+    <!-- User Status Section -->
+    <div class="user-status" style="text-align: center; margin-bottom: 3rem;">
+        {% if not current_user.is_authenticated %}
+            <p style="font-size: 1.2rem; margin-bottom: 1.5rem;">
+                Please sign in to access tools for your organization.
+            </p>
+            <a href="{{ url_for('sign_in') }}" class="action-button" style="display: inline-block; padding: 0.75rem 2rem; border-radius: 5px; text-decoration: none; font-size: 1.1rem; transition: background-color 0.3s;">
+                Sign In
+            </a>
+        {% else %}
+            <p style="font-size: 1.2rem; margin-bottom: 1.5rem;">
+                Welcome, {{ current_user.email }}. You are now logged in.
+            </p>
+            <a href="{{ url_for('dashboard') }}" class="action-button" style="display: inline-block; padding: 0.75rem 2rem; border-radius: 5px; text-decoration: none; font-size: 1.1rem; transition: background-color 0.3s;">
+                Go to Dashboard
+            </a>
+        {% endif %}
+    </div>
+
+    <!-- Disclaimer Section -->
+    <div class="disclaimer-section" style="text-align: center; padding-top: 2rem;">
+    <p class="disclaimer" style="font-size: 1rem; line-height: 1.5;">
+        The DPAT is designed to help companies meet and maintain compliance with EU data privacy regulations<br>
+        We are not responsible for implementing those changes
+    </p>
+</div>
+</div>
+
+
+{% endblock %}

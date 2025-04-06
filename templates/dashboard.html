@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - DPAT{% endblock %}
+{% block content %}
+<div class="main-content">
+    {% if current_user.role == 'admin' %}
+        <h1>Welcome, {{ current_user.email }}</h1>
+        <div class="dashboard-container">
+            <!-- Compliance Score -->
+            <div class="compliance-score">
+                <h2>Compliance Score</h2>
+                <div class="score-box">{{ avg_score }}%</div>
+            </div>
+
+            <!-- Date Set -->
+            <div class="compliance-score">
+                <h2>Date Set</h2>
+                <div class="score-box date-set" id="date-set">{{ goal_date if goal_date else 'Not Set' }}</div>
+            </div>
+
+            <!-- Days Remaining -->
+            <div class="compliance-score">
+                <h2>Days Remaining</h2>
+                <div class="score-box" id="days-remaining">{{ days_remaining if days_remaining else 'N/A' }}</div>
+            </div>
+        </div>
+
+        <!-- Separator Line -->
+        <hr class="separator">
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <a href="{{ url_for('org_manager') }}" class="action-button">Manage User Accounts</a>
+            <a href="#" class="action-button" id="set-goal-date">Set Performance Goal</a>
+            <a href="{{ url_for('results_user') }}" class="action-button">See Compliance Results</a>
+            <a href="{{ url_for('checklist') }}" class="action-button">See To-Do Report</a>
+        </div>
+
+        <p class="disclaimer">This dashboard is visible only to admin users.</p>
+    {% else %}
+        <h1>Access Denied</h1>
+        <p>This page is restricted to admin users only. Please contact an administrator.</p>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr("#set-goal-date", {
+            enableTime: false,
+            dateFormat: "F j",
+            onChange: function(selectedDates, dateStr) {
+                // AJAX call to save goal date
+                fetch('/set_goal_date', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({goal_date: dateStr})
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('date-set').textContent = dateStr;
+                    document.getElementById('days-remaining').textContent = data.days_remaining >= 0 ? data.days_remaining : "Past Due";
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}

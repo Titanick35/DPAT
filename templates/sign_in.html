@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Sign In - Data Privacy and Analysis Tool{% endblock %}
+{% block content %}
+<div class="main-content">
+    <div class="sign-in-box">
+        <h1>Sign In</h1>
+        <p>Data Privacy and Analysis Tool</p>
+        <form action="{{ url_for('sign_in') }}" method="POST">
+            <div class="form-group">
+                <label for="username">Organization Email:</label>
+                <input type="email" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="error-message">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div class="form-actions">
+                <button type="submit">Log-In</button>
+                <a href="{{ url_for('forgot_password') }}" class="forgot-password">Forgot Password?</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

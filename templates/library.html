@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="main-content">
+    <div class="section">
+        <h2>DPAT Compliance Library</h2>
+        <p class="intro-text">
+            Below is the General Data Protection Regulation (GDPR) document, provided as an interactive PDF. Use the navigation controls to browse through the document.
+        </p>
+
+        <!-- PDF Embed Container -->
+        <div class="pdf-container">
+            <iframe src="{{ url_for('static', filename='pdf/DPAT Library.pdf') }}#toolbar=1&navpanes=0&scrollbar=1"
+                    class="pdf-viewer"
+                    title="DPAT Compliance Library - GDPR Document">
+                <!-- Fallback for browsers that don't support iframes or PDF embedding -->
+                <p>Your browser does not support embedded PDFs.
+                   <a href="{{ url_for('static', filename='pdf/DPAT Library.pdf') }}" target="_blank">Download the PDF here</a>.
+                </p>
+            </iframe>
+        </div>
+        </a>
+    </div>
+</div>
+
+<!-- JavaScript to Ensure PDF Loads Properly -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const iframe = document.querySelector('.pdf-viewer');
+        iframe.onload = function() {
+            console.log('PDF loaded successfully');
+        };
+        iframe.onerror = function() {
+            console.error('Error loading PDF');
+        };
+    });
+</script>
+{% endblock %}

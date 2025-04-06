@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Admin Results - DPAT{% endblock %}
+{% block content %}
+<div class="main-content">
+    {% if current_user.role == 'admin' %}
+        <h1>User Results</h1>
+        <div class="org-manager-container">
+            <div class="admin-manager">
+                <h2>Users: {{ organization_name | default('Sacred Heart University') }}</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Number</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.role }}</td>
+                                <td>{{ user.assessment_scores[-1].score if user.assessment_scores else 'N/A' }}%</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="compliance-score">
+                <h2>Average Score</h2>
+                <div class="score-box">{{ avg_score }}</div>
+            </div>
+        </div>
+        <p class="disclaimer">User Assessment Score - only accessible to Admin - displays user’s assessment score and average scores of all users.</p>
+    {% else %}
+        <h1>Access Denied</h1>
+        <p>This page is restricted to admin users only. Please contact an administrator.</p>
+    {% endif %}
+</div>
+{% endblock %}

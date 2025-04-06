@@ -1,0 +1,663 @@
+{% extends "base.html" %}
+{% block title %}Assessment - DPAT{% endblock %}
+{% block content %}
+<div class="main-content">
+    <h1>Begin Compliance Assessment</h1>
+    <p>This exam evaluates your organization's Data Practices using the GDPR Requirements.</p>
+
+    <!-- Instructions Section -->
+    <div class="instructions">
+        <h2>Instructions</h2>
+        <ul>
+            <li>This exam consists of 20 questions.</li>
+            <li>Please select the most appropriate answer.</li>
+            <li>For scenario-based questions, choose all applicable responses.</li>
+            <li>Once you have answered the questions, submit the responses.</li>
+        </ul>
+    </div>
+
+    <!-- Assessment Form -->
+    <form method="POST" action="{{ url_for('assessment') }}">
+        <h2>Part I: Multiple Choice Questions</h2>
+        <div class="question-container">
+            <div class="question">
+                <p><strong>1.</strong> How does your organization handle the collection of personal data from EU residents?</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q1" value="a" required>
+                            We collect personal data without a clear, documented purpose.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q1" value="b">
+                            We collect personal data for specific, documented purposes and based on explicit consent.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q1" value="c">
+                            We collect personal data only for internal use and without consent.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q1" value="d">
+                            We do not process personal data of EU residents.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <div class="question">
+                <p><strong>2.</strong> How does your organization ensure that personal data is only accessible by authorized individuals?</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q2" value="a" required>
+                            We rely on basic access control, allowing broad access to data.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q2" value="b">
+                            We implement strict access control policies and regularly review access permissions.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q2" value="c">
+                            We allow employees unrestricted access to personal data if stored in the same database.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q2" value="d">
+                            We have no specific access control policies in place.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <div class="question">
+                <p><strong>3.</strong> How does your organization manage data retention and deletion under GDPR?</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q3" value="a" required>
+                            We store personal data indefinitely unless explicitly requested by the data subject.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q3" value="b">
+                            We store personal data only for as long as necessary and securely delete it when no longer needed.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q3" value="c">
+                            We keep data for as long as possible for future business purposes.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q3" value="d">
+                            We have no formal data retention policy.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <div class="question">
+                <p><strong>4.</strong> How does your organization handle obtaining consent from data subjects?</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q4" value="a" required>
+                            We collect personal data without seeking explicit consent.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q4" value="b">
+                            We collect personal data only after obtaining clear, informed consent and allow individuals to withdraw consent.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q4" value="c">
+                            We assume that individuals implicitly consent when they use our services.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q4" value="d">
+                            We collect personal data only when required by law.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <div class="question">
+                <p><strong>5.</strong> How does your organization protect personal data during transmission?</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q5" value="a" required>
+                            We use no encryption for data transmission.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q5" value="b">
+                            We use basic security protocols like HTTP, without encryption.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q5" value="c">
+                            We use encryption for sensitive data during transmission but not for all data.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q5" value="d">
+                            We use HTTPS and implement encryption for all personal data transmissions.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <div class="question">
+                <p><strong>6.</strong> What is your organization’s approach to handling data breaches?</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q6" value="a" required>
+                            We have no formal breach notification process in place.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q6" value="b">
+                            We notify affected individuals and report to relevant authorities within 72 hours of a breach.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q6" value="c">
+                            We notify individuals only if the breach is deemed significant.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q6" value="d">
+                            We do not notify anyone about data breaches.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <div class="question">
+                <p><strong>7.</strong> Does your organization conduct Data Protection Impact Assessments (DPIAs) for new data processing activities?</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q7" value="a" required>
+                            We only conduct DPIAs for high-risk activities.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q7" value="b">
+                            We do not conduct DPIAs unless legally required.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q7" value="c">
+                            We conduct DPIAs for all new data processing activities.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q7" value="d">
+                            We conduct DPIAs only when prompted by the regulatory authority.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <div class="question">
+                <p><strong>8.</strong> How does your organization ensure the accuracy of personal data?</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q8" value="a" required>
+                            We do not have procedures for checking the accuracy of personal data.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q8" value="b">
+                            We update personal data only when the individual requests an update.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q8" value="c">
+                            We regularly review and update personal data to ensure its accuracy.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q8" value="d">
+                            We store personal data as provided by the individual and make no updates.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <div class="question">
+                <p><strong>9.</strong> How does your organization handle requests from individuals to access or delete their personal data under GDPR?</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q9" value="a" required>
+                            We do not have a formal process to handle these requests.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q9" value="b">
+                            We respond to requests within 30 days, confirming the status of the request.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q9" value="c">
+                            We only respond to requests made in writing or by email.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q9" value="d">
+                            We automatically reject requests if the individual’s identity cannot be verified.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <div class="question">
+                <p><strong>10.</strong> How does your organization ensure third-party vendors comply with GDPR when processing personal data?</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q10" value="a" required>
+                            We assume third-party vendors are compliant without formal agreements.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q10" value="b">
+                            We have formal contracts in place that include GDPR-specific clauses.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q10" value="c">
+                            We do not monitor third-party vendors for GDPR compliance.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="radio" name="q10" value="d">
+                            We only work with vendors located within the EU.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Part II: Multiple-Answer Questions</h2>
+        <div class="question-container">
+            <div class="question">
+                <p><strong>11.</strong> Which of the following practices does your organization follow to ensure compliance with the GDPR principle of "data minimization"? (Select all that apply.)</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q11" value="a">
+                            We collect only the minimum amount of personal data necessary for our business purpose.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q11" value="b">
+                            We store personal data indefinitely to ensure we have it available if needed.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q11" value="c">
+                            We regularly review and limit the data we collect to prevent unnecessary storage.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q11" value="d">
+                            We request extensive personal information from customers to better understand their preferences.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <div class="question">
+                <p><strong>12.</strong> Which of the following security measures has your organization implemented to protect personal data? (Select all that apply.)</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q12" value="a">
+                            Encryption of personal data at rest and during transmission.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q12" value="b">
+                            Regular security audits and vulnerability testing of IT systems.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q12" value="c">
+                            Restricting physical access to data storage locations.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q12" value="d">
+                            Allowing all employees full access to personal data without restrictions.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <div class="question">
+                <p><strong>13.</strong> Which actions does your organization take to comply with the GDPR’s "Right to Erasure" (Right to be Forgotten)? (Select all that apply.)</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q13" value="a">
+                            We permanently delete personal data upon request when no legitimate business reason exists for its retention.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q13" value="b">
+                            We assess whether data can be erased unless it's required for legal reasons.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q13" value="c">
+                            We store personal data indefinitely and only provide a reason for deletion if requested by the individual.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q13" value="d">
+                            We inform the data subject of the actions we take in response to their request.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <div class="question">
+                <p><strong>14.</strong> When transferring personal data to third parties outside the EU, which of the following safeguards does your organization use to ensure GDPR compliance? (Select all that apply.)</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q14" value="a">
+                            We use Standard Contractual Clauses (SCCs) to secure the data transfer.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q14" value="b">
+                            We rely on verbal agreements and assume that the third party is GDPR-compliant.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q14" value="c">
+                            We assess the data protection laws of the recipient country before transferring data.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q14" value="d">
+                            We ensure the third-party provider has signed a Data Processing Agreement (DPA) with GDPR clauses.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <div class="question">
+                <p><strong>15.</strong> How does your organization handle consent management for personal data processing? (Select all that apply.)</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q15" value="a">
+                            We collect explicit consent for each type of data processing activity.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q15" value="b">
+                            We use pre-ticked boxes to obtain consent during registration.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q15" value="c">
+                            We allow individuals to withdraw consent at any time.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q15" value="d">
+                            We collect consent only once and do not provide individuals with an option to withdraw.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Part III: Scenario-Based Questions</h2>
+        <div class="question-container">
+            <div class="question">
+                <p><strong>16.</strong> Scenario: Your company has launched a new marketing campaign that involves collecting email addresses and phone numbers from potential customers for promotional purposes. The marketing team has not yet consulted with the data protection officer (DPO). What actions should your organization take to ensure GDPR compliance for this campaign? (Select all that apply.)</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q16" value="a">
+                            Review the purpose of data collection to ensure it is documented and clear.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q16" value="b">
+                            Obtain explicit consent from individuals before collecting their personal data.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q16" value="c">
+                            Inform individuals about how their data will be used and their rights under GDPR.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q16" value="d">
+                            Begin the campaign immediately without any consultation with the DPO as consent is implied.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <div class="question">
+                <p><strong>17.</strong> Scenario: A data breach occurs when an employee accidentally sends a document containing sensitive personal data (e.g., health data) to the wrong email address. The email was not encrypted. What immediate actions should your organization take following this breach? (Select all that apply.)</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q17" value="a">
+                            Inform affected individuals and relevant supervisory authorities within 72 hours.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q17" value="b">
+                            Investigate the cause of the breach and mitigate any future risks.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q17" value="c">
+                            Document the breach and any actions taken to address it.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <div class="question">
+                <p><strong>18.</strong> Scenario: A customer requests to have their personal data deleted because they no longer want to receive marketing communications. The data includes their name, email, and past purchase history. How should your organization respond to this request? (Select all that apply.)</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q18" value="a">
+                            Confirm the request within 30 days and delete all personal data, unless legally required to retain it.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q18" value="b">
+                            Deny the request if the data is necessary for fulfilling contractual obligations.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q18" value="c">
+                            Ask the customer to provide proof of identity before processing the request.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q18" value="d">
+                            Store the customer’s data indefinitely unless they explicitly withdraw consent.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <div class="question">
+                <p><strong>19.</strong> Scenario: Your organization is preparing to outsource customer support services to a third-party provider in the US. The provider will have access to personal data, including customer contact details and purchase history. What actions must your organization take to ensure compliance with GDPR? (Select all that apply.)</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q19" value="a">
+                            Execute a Data Processing Agreement (DPA) with the third-party provider.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q19" value="b">
+                            Transfer the data without taking any specific measures, assuming the provider is compliant with GDPR.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q19" value="c">
+                            Ensure that the provider implements adequate safeguards, such as Standard Contractual Clauses (SCCs).
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q19" value="d">
+                            Transfer personal data without assessing the provider’s data protection measures.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-container">
+            <div class="question">
+                <p><strong>20.</strong> Scenario: Your company is conducting an audit of its data security practices and has found that certain personal data stored on employee laptops is not encrypted. This includes sensitive data like employee addresses and social security numbers. What should your organization do to address this issue? (Select all that apply.)</p>
+                <div class="question-options">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q20" value="a">
+                            Immediately encrypt all personal data on employee laptops.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q20" value="b">
+                            Implement encryption on all devices used for storing or accessing personal data.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q20" value="c">
+                            Nothing can be done, as encryption is not legally required for personal data on laptops.
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" name="q20" value="d">
+                            Update company policies to mandate encryption for all personal data.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

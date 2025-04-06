@@ -1,0 +1,306 @@
+{% extends "base.html" %}
+{% block title %}Consequences & Best Practices - DPAT{% endblock %}
+{% block content %}
+<div class="main-content">
+    <h1>Consequences & Best Practices</h1>
+    <p class="intro-text">Understand the potential outcomes of data breaches and learn best practices to prevent them.</p>
+    <p class="intro-text">Click on each individual tab or use the access buttons to see the information.</p>
+    <!-- Data Breach Consequences -->
+    <div class="section" id="consequences">
+        <h2>Data Breach Consequences – Common Outcomes</h2>
+
+        <!-- Expand/Close All Buttons -->
+        <div class="accordion-controls">
+            <button class="accordion-control-button" onclick="expandAll()">Expand All</button>
+            <button class="accordion-control-button" onclick="closeAll()">Close All</button>
+        </div>
+
+        <div class="accordion">
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Loss of Trust</button>
+                <div class="accordion-content" id="loss-of-trust">
+                    <p>A data breach can severely damage an organization's reputation, leading to a loss of trust among customers, partners, and stakeholders. When sensitive information is compromised, individuals may feel vulnerable and hesitant to continue engaging with the organization, fearing further security lapses. This erosion of trust can result in:</p>
+                    <ul>
+                        <li>Financial losses due to customer attrition.</li>
+                        <li>Legal consequences as affected parties seek compensation.</li>
+                        <li>Business moving to competitors.</li>
+                    </ul>
+                    <p>Moreover, regulatory bodies may impose fines and sanctions, further straining the organization's resources and credibility.</p>
+                    <p><strong>GDPR Relevance:</strong> The General Data Protection Regulation (GDPR) establishes strict guidelines for data protection and holds organizations accountable for breaches. Companies must implement robust security measures and promptly notify authorities and affected individuals in the event of a breach. Failure to comply can lead to fines of up to 4% of annual global revenue or €20 million, whichever is higher, exacerbating the financial and reputational damage. GDPR emphasizes the need for proactive security measures to maintain trust.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Reputational Damage</button>
+                <div class="accordion-content" id="reputational-damage">
+                    <p>Reputational damage following a data breach can have long-lasting consequences, including:</p>
+                    <ul>
+                        <li>Decreased customer retention and lost business opportunities.</li>
+                        <li>Decline in brand value due to negative media coverage.</li>
+                        <li>Impact on employee morale and investor confidence, potentially affecting stock prices.</li>
+                    </ul>
+                    <p>The cost of restoring reputation through public relations efforts, security improvements, and customer compensation can be substantial.</p>
+                    <p><strong>GDPR Relevance:</strong> GDPR mandates transparency by requiring prompt disclosure of breaches, which can intensify public backlash if mishandled. Non-compliance can lead to significant fines, further harming credibility. Organizations that fail to comply may be perceived as negligent, worsening reputational harm.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Regulatory Scrutiny</button>
+                <div class="accordion-content" id="regulatory-scrutiny">
+                    <p>Regulatory scrutiny following a data breach can lead to:</p>
+                    <ul>
+                        <li>Costly legal proceedings and mandatory audits.</li>
+                        <li>Stricter compliance requirements and increased oversight.</li>
+                        <li>Operational disruptions and loss of business relationships.</li>
+                    </ul>
+                    <p>Heightened regulatory attention can also damage the organization's credibility.</p>
+                    <p><strong>GDPR Relevance:</strong> GDPR establishes clear legal obligations, with fines up to 4% of annual global revenue or €20 million for non-compliance. Regulatory bodies like the European Data Protection Board can investigate breaches and enforce corrective actions. Timely breach notifications are mandatory, increasing public and regulatory attention.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Lawsuits, Settlements, & Legal Fees</button>
+                <div class="accordion-content" id="lawsuits">
+                    <p>Lawsuits and legal fees can impose a significant burden, including:</p>
+                    <ul>
+                        <li>Compensation for damages like identity theft or financial loss.</li>
+                        <li>Substantial settlement costs from class-action lawsuits.</li>
+                        <li>Prolonged negative media attention, further damaging reputation.</li>
+                    </ul>
+                    <p>Legal fees for defending claims and ensuring compliance can be overwhelming.</p>
+                    <p><strong>GDPR Relevance:</strong> GDPR allows individuals to seek compensation for harm due to data breaches. Non-compliance can lead to regulatory penalties and strengthen the legal basis for lawsuits, amplifying financial and reputational damage.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Other Financial Penalties</button>
+                <div class="accordion-content" id="financial-penalties">
+                    <p>Beyond regulatory fines, financial penalties include:</p>
+                    <ul>
+                        <li>Direct costs: forensic investigations, breach notifications, and customer compensation.</li>
+                        <li>Loss of revenue as customers take business elsewhere.</li>
+                        <li>Increased insurance premiums or payouts.</li>
+                        <li>Costs of security upgrades to prevent future breaches.</li>
+                    </ul>
+                    <p><strong>GDPR Relevance:</strong> GDPR imposes fines up to 4% of global annual revenue or €20 million for non-compliance. Organizations must invest in robust security measures, or face higher costs post-breach.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Exposure of Sensitive Information</button>
+                <div class="accordion-content" id="exposure">
+                    <p>Exposure of sensitive information can lead to:</p>
+                    <ul>
+                        <li>Identity theft, fraud, or cybercrimes for individuals.</li>
+                        <li>Loss of competitive advantage due to leaked intellectual property.</li>
+                        <li>Legal disputes and damaged business relationships.</li>
+                    </ul>
+                    <p><strong>GDPR Relevance:</strong> GDPR requires appropriate security measures to prevent unauthorized access and mandates breach notifications. Failure to protect data can result in significant fines and legal consequences.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Shutdowns</button>
+                <div class="accordion-content" id="shutdowns">
+                    <p>Shutdowns following a breach can cause:</p>
+                    <ul>
+                        <li>Operational disruptions and lost revenue.</li>
+                        <li>Missed business opportunities and delays in services.</li>
+                        <li>Loss of customer and partner confidence.</li>
+                    </ul>
+                    <p><strong>GDPR Relevance:</strong> GDPR requires stringent security measures and timely breach notifications. Non-compliance can lead to sanctions, extending downtime and increasing scrutiny.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Loss of Intellectual Property</button>
+                <div class="accordion-content" id="ip-loss">
+                    <p>Loss of intellectual property can result in:</p>
+                    <ul>
+                        <li>Competitors exploiting proprietary information.</li>
+                        <li>Reduced revenue and weakened partnerships.</li>
+                        <li>Legal disputes over unauthorized use.</li>
+                    </ul>
+                    <p><strong>GDPR Relevance:</strong> While GDPR focuses on personal data, its security principles apply to all sensitive information. Breaches involving PII can lead to additional fines and lawsuits.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Criminal Convictions & Resignations</button>
+                <div class="accordion-content" id="convictions">
+                    <p>Convictions and resignations can lead to:</p>
+                    <ul>
+                        <li>Legal action against negligent executives or employees.</li>
+                        <li>Leadership instability and reduced employee morale.</li>
+                        <li>Challenges in recruiting new leadership.</li>
+                    </ul>
+                    <p><strong>GDPR Relevance:</strong> GDPR holds executives personally liable for non-compliance. Regulatory investigations can lead to legal consequences and forced resignations, intensifying public scrutiny.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Breach Prevention – Best Practices -->
+    <div class="section" id="best-practices">
+        <h2>Data Breach Prevention – Best Practices</h2>
+
+        <!-- Expand/Close All Buttons -->
+        <div class="accordion-controls">
+            <button class="accordion-control-button" onclick="expandAll()">Expand All</button>
+            <button class="accordion-control-button" onclick="closeAll()">Close All</button>
+        </div>
+
+        <div class="accordion">
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Layered Security – Defense in Depth</button>
+                <div class="accordion-content" id="layered-security">
+                    <p>Layered security employs multiple security measures to protect assets, including:</p>
+                    <ul>
+                        <li>Physical security, network security, and endpoint protection.</li>
+                        <li>Access controls and data encryption.</li>
+                    </ul>
+                    <p>This approach ensures that if one control fails, others remain to limit the impact of an attack.</p>
+                    <p><strong>GDPR Relevance:</strong> GDPR mandates appropriate technical safeguards to prevent breaches. Defense in depth aligns with these requirements by enhancing data protection through multiple layers.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Patch Management</button>
+                <div class="accordion-content" id="patch-management">
+                    <p>Patch management involves regularly updating software to fix vulnerabilities, reducing the risk of:</p>
+                    <ul>
+                        <li>Unauthorized access and data theft.</li>
+                        <li>System disruptions and downtime.</li>
+                    </ul>
+                    <p><strong>GDPR Relevance:</strong> GDPR requires keeping systems up to date to prevent breaches. Failure to apply patches can lead to non-compliance and penalties.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Vulnerability & Penetration Testing</button>
+                <div class="accordion-content" id="vulnerability-testing">
+                    <p>Vulnerability and penetration testing identify weaknesses by:</p>
+                    <ul>
+                        <li>Scanning for known security flaws.</li>
+                        <li>Simulating real-world attacks to test defenses.</li>
+                    </ul>
+                    <p>Regular testing strengthens security posture and reduces breach risks.</p>
+                    <p><strong>GDPR Relevance:</strong> GDPR mandates proactive security measures. Regular testing helps organizations identify and fix weaknesses, ensuring compliance.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Employee Training & Awareness</button>
+                <div class="accordion-content" id="employee-training">
+                    <p>Employee training reduces human error by educating staff on:</p>
+                    <ul>
+                        <li>Phishing threats and password management.</li>
+                        <li>Data protection policies and security best practices.</li>
+                    </ul>
+                    <p><strong>GDPR Relevance:</strong> GDPR requires staff to understand data handling responsibilities. Training helps prevent accidental breaches and ensures compliance.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Access Controls</button>
+                <div class="accordion-content" id="access-controls">
+                    <p>Access controls regulate who can access data, using:</p>
+                    <ul>
+                        <li>Role-based access control (RBAC) and multi-factor authentication (MFA).</li>
+                        <li>Least privilege principles to limit exposure.</li>
+                    </ul>
+                    <p><strong>GDPR Relevance:</strong> GDPR requires protection against unauthorized access. Strict access controls reduce breach risks and ensure compliance.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Encryption of Sensitive Data</button>
+                <div class="accordion-content" id="encryption">
+                    <p>Encryption transforms data into an unreadable format, protecting it:</p>
+                    <ul>
+                        <li>At rest (stored data) and in transit (transmitted data).</li>
+                        <li>From unauthorized access, even if stolen.</li>
+                    </ul>
+                    <p><strong>GDPR Relevance:</strong> GDPR mandates technical safeguards like encryption. Encrypted data may not be reportable as a breach, reducing legal risks.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Data Minimization</button>
+                <div class="accordion-content" id="data-minimization">
+                    <p>Data minimization limits data collection to what’s necessary, reducing:</p>
+                    <ul>
+                        <li>Risk of exposure in a breach.</li>
+                        <li>Complexity in data management.</li>
+                    </ul>
+                    <p><strong>GDPR Relevance:</strong> GDPR requires data to be adequate, relevant, and limited. Data minimization aligns with this principle, mitigating breach risks.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Data Deletion Protocols</button>
+                <div class="accordion-content" id="data-deletion">
+                    <p>Data deletion protocols securely remove unneeded data, using:</p>
+                    <ul>
+                        <li>Cryptographic wiping or physical destruction.</li>
+                        <li>Processes to ensure data cannot be recovered.</li>
+                    </ul>
+                    <p><strong>GDPR Relevance:</strong> GDPR mandates data not be retained longer than necessary and supports the right to be forgotten. Secure deletion ensures compliance.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Incident Response Protocols</button>
+                <div class="accordion-content" id="incident-response">
+                    <p>Incident response protocols ensure a swift response to breaches, including:</p>
+                    <ul>
+                        <li>Detecting, containing, and mitigating risks.</li>
+                        <li>Investigating causes and notifying stakeholders.</li>
+                    </ul>
+                    <p><strong>GDPR Relevance:</strong> GDPR requires breach notifications within 72 hours. A strong response plan ensures compliance and minimizes damage.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">Continuous Logging and Monitoring</button>
+                <div class="accordion-content" id="logging-monitoring">
+                    <p>Continuous logging and monitoring provide visibility into:</p>
+                    <ul>
+                        <li>Network traffic and user activities.</li>
+                        <li>Potential threats and unusual behavior.</li>
+                    </ul>
+                    <p><strong>GDPR Relevance:</strong> GDPR requires technical measures to safeguard data. Monitoring detects threats in real-time, ensuring compliance.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="{{ url_for('breach_info') }}" class="results-button">Back to Breach Information</a>
+</div>
+
+<!-- JavaScript for Accordion -->
+<script>
+function toggleAccordion(button) {
+    const content = button.nextElementSibling;
+    const isOpen = content.style.display === "block";
+    // Close all other accordion items
+    document.querySelectorAll('.accordion-content').forEach(item => {
+        item.style.display = "none";
+    });
+    // Toggle the clicked item
+    content.style.display = isOpen ? "none" : "block";
+}
+
+function expandAll() {
+    document.querySelectorAll('.accordion-content').forEach(item => {
+        item.style.display = "block";
+    });
+}
+
+function closeAll() {
+    document.querySelectorAll('.accordion-content').forEach(item => {
+        item.style.display = "none";
+    });
+}
+</script>
+{% endblock %}

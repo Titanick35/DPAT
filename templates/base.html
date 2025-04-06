@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Data Privacy and Analysis Tool - DPAT{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body class="{% if current_user.is_authenticated %}authenticated{% else %}unauthenticated{% endif %}">
+    <header>
+    <img src="{{ url_for('static', filename='images/dpat_header_logo.png') }}" alt="DPAT Logo" class="header-logo">
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+</header>
+    {% if current_user.is_authenticated %}
+    <div class="sidebar">
+        <h2>Navigation</h2>
+        <ul>
+            {% if current_user.email == 'sysadmin@dpat.org' %}
+                <li><a href="{{ url_for('sys_manager') }}" class="{% if request.endpoint == 'sys_manager' %}active{% endif %}">System Manager</a></li>
+            {% else %}
+                <li><a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}active{% endif %}">Home</a></li>
+                <li><a href="{{ url_for('dashboard') }}" class="{% if request.endpoint == 'dashboard' %}active{% endif %}">Dashboard</a></li>
+                <li class="has-submenu">
+                    <a href="{{ url_for('assessment') }}" class="{% if request.endpoint == 'assessment' %}active{% endif %}">Assessment</a>
+                    <ul class="submenu">
+                        <li><a href="{{ url_for('results_user') }}" class="{% if request.endpoint == 'results_user' %}active{% endif %}">– Results</a></li>
+                        {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                            <li><a href="{{ url_for('results_admin') }}" class="{% if request.endpoint == 'results_admin' %}active{% endif %}">– Admin Results</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                <li class="has-submenu">
+                    <a href="{{ url_for('checklist') }}" class="{% if request.endpoint == 'checklist' %}active{% endif %}">Compliance Checklist</a>
+                    <ul class="submenu">
+                        <li><a href="{{ url_for('to_do_list') }}" class="{% if request.endpoint == 'to_do_list' %}active{% endif %}">– To-Do List</a></li>
+                    </ul>
+                </li>
+                <li class="has-submenu">
+                    <a href="{{ url_for('library') }}" class="{% if request.endpoint == 'library' %}active{% endif %}">Compliance Library</a>
+                </li>
+                <li class="has-submenu">
+                    <a href="{{ url_for('breach_info') }}" class="{% if request.endpoint == 'breach_info' %}active{% endif %}">Breach Information</a>
+                    <ul class="submenu">
+                        <li><a href="{{ url_for('risks_bp') }}" class="{% if request.endpoint == 'risks_bp' %}active{% endif %}">– BI Graphical Analysis</a></li>
+                        <li><a href="{{ url_for('consequences_bp') }}" class="{% if request.endpoint == 'consequences_bp' %}active{% endif %}">– Consequences and BP</a></li>
+                    </ul>
+                </li>
+                {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                    <li><a href="{{ url_for('org_manager') }}" class="{% if request.endpoint == 'org_manager' %}active{% endif %}">Organization Manager</a></li>
+                {% endif %}
+            {% endif %}
+        </ul>
+    </div>
+    {% endif %}
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>© 2025 Data Privacy and Analysis Tool (DPAT). All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Breach Informant Graphical Analysis - DPAT{% endblock %}
+{% block content %}
+<div class="main-content">
+    <h1>Breach Informant Graphical Analysis</h1>
+    <p class="intro-text">This page provides a visual analysis of the consequences and financial impacts of major data breaches since 2010, helping organizations understand the risks and potential costs associated with data breaches.</p>
+
+    <!-- Graphical Analysis -->
+    <div class="graph-container">
+        <h3 class="graph-title">Figure 1 – Consequence Analysis</h3>
+        <img src="{{ url_for('static', filename='images/data_breach_consequence_analysis.png') }}" alt="Data Breach Consequence Analysis" class="graph-image">
+        <p class="graph-caption">This chart illustrates the various consequences faced by companies after a data breach, such as resignations, criminal convictions, financial penalties, security upgrades, legal fees, shutdowns, reputational damage, regulatory scrutiny, and loss of customer trust.</p>
+    </div>
+
+    <div class="graph-container">
+        <h3 class="graph-title">Figure 2 – Consequence Frequency Analysis</h3>
+        <img src="{{ url_for('static', filename='images/data_breach_consequence_frequency_analysis.png') }}" alt="Data Breach Consequence Frequency Analysis" class="graph-image">
+        <p class="graph-caption">This histogram shows the frequency of each consequence across the analyzed breaches, highlighting that loss of customer trust, regulatory scrutiny, and reputational damage are the most common outcomes.</p>
+    </div>
+
+    <div class="graph-container">
+        <h3 class="graph-title">Figure 3 – Financial Analysis</h3>
+        <img src="{{ url_for('static', filename='images/data_breach_financial_analysis.png') }}" alt="Data Breach Financial Analysis" class="graph-image">
+        <p class="graph-caption">This bar chart displays the financial penalties (in millions USD) incurred by each company due to data breaches, with Equifax facing the highest penalty at over 2000 million USD.</p>
+    </div>
+</div>
+{% endblock %}

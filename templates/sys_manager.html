@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}System Manager - DPAT{% endblock %}
+{% block content %}
+<div class="main-content">
+    <h1>System Manager</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <meta http-equiv="refresh" content="2;url={{ url_for('sys_manager') }}">
+        {% endif %}
+    {% endwith %}
+    <div class="sys-manager-container">
+        <div class="admin-manager">
+            <h2>Organizations</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Admin</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for org in organizations %}
+                        <tr>
+                            <td>{{ org.id }}</td>
+                            <td>{{ org.name }}</td>
+                            <td>{{ org.admin.email if org.admin else 'N/A' }}</td>
+                            <td><input type="checkbox" name="remove_org" value="{{ org.id }}"></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button onclick="removeOrgs()" class="action-button">Remove Selected</button>
+        </div>
+        <div class="create-org-box">
+            <h2>Create Organization</h2>
+            <form method="POST" action="{{ url_for('sys_manager') }}">
+                <div class="form-group">
+                    <label for="org_name">Organization Name</label>
+                    <input type="text" id="org_name" name="org_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin_name">Admin Name</label>
+                    <input type="text" id="admin_name" name="admin_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin_username">Admin Username (Email)</label>
+                    <input type="email" id="admin_username" name="admin_username" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin_password">Admin Password</label>
+                    <input type="password" id="admin_password" name="admin_password" required>
+                </div>
+                <button type="submit">Create</button>
+            </form>
+        </div>
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <p class="flash-{{ category }}">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
+
+<script>
+    function removeOrgs() {
+        const checkboxes = document.querySelectorAll('input[name="remove_org"]:checked');
+        const orgIds = Array.from(checkboxes).map(cb => cb.value);
+        if (orgIds.length > 0) {
+            if (confirm(`Are you sure you want to remove ${orgIds.length} organization(s)?`)) {
+                window.location.href = `{{ url_for('sys_manager') }}?remove=${orgIds.join(',')}`;
+            }
+        } else {
+            alert('Please select at least one organization to remove.');
+        }
+    }
+</script>
+{% endblock %}
