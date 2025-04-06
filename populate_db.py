@@ -1,7 +1,9 @@
-from app import db, app, User, Organization
 from werkzeug.security import generate_password_hash
 
 def populate_db():
+    # Import inside the function to avoid circular import
+    from app import db, app, User, Organization
+
     with app.app_context():
         # Create tables if they don't exist (won't drop existing tables)
         db.create_all()
