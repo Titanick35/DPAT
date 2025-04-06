@@ -7,7 +7,7 @@ import os
 
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', f'sqlite:///{os.path.join(os.path.dirname(__file__), "dpat.db")}')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://dpat_db_user:zdZVlEdjMOqzHv8ofBIAhPaONUxs43BY@dpg-cvped8je5dus73cfmsvg-a.virginia-postgres.render.com/dpat_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
