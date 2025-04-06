@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, make_response, jsonify
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import os
@@ -15,16 +16,20 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 print(f"Database URI: {app.config['SQLALCHEMY_DATABASE_URI']}")
 db = SQLAlchemy(app)
 
+# Initialize Flask-Migrate
+migrate = Migrate(app, db)  # Add this line to set up Flask-Migrate
+
 # Flask-Login setup
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'sign_in'
 
 # User model
+# In app.py, update the User model
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(128), nullable=False)  # Hashed password
+    password = db.Column(db.String(256), nullable=False)  # Increased length for hashed password
     role = db.Column(db.String(20), nullable=False, default='user')
     first_name = db.Column(db.String(50))
     last_name = db.Column(db.String(50))
@@ -262,24 +267,21 @@ def org_manager():
 
     # Handle POST request for creating a new user
     if request.method == 'POST':
-        # Extract form data
         first_name = request.form.get('first_name')
         last_name = request.form.get('last_name')
         email = request.form.get('email')
         password = request.form.get('password')
         privileges = request.form.get('privileges')
 
-        # Validate form data
         if not email or not password or not privileges:
             flash('User creation failed. All fields (email, password, privileges) are required.')
         elif User.query.filter_by(email=email).first():
             flash('User creation failed. Email already exists.')
         else:
             try:
-                # Create new user with the current admin's organization_id
                 new_user = User(
                     email=email,
-                    password=generate_password_hash(password),
+                    password=generate_password_hash(password, method='scrypt'),  # Explicitly specify scrypt
                     role=privileges,
                     first_name=first_name,
                     last_name=last_name,
@@ -288,7 +290,6 @@ def org_manager():
                 db.session.add(new_user)
                 db.session.commit()
                 flash(f'User {email} created successfully!', 'success')
-                # Refresh users_data after adding a new user
                 users_data = User.query.filter_by(organization_id=current_user.organization_id).all()
             except Exception as e:
                 db.session.rollback()
@@ -363,26 +364,21 @@ def sys_manager():
 
         if org_name and admin_name and admin_username and admin_password:
             if not User.query.filter_by(email=admin_username).first():
-                # Create the new admin user
                 new_admin = User(
                     email=admin_username,
-                    password=generate_password_hash(admin_password),
+                    password=generate_password_hash(admin_password, method='scrypt'),  # Explicitly specify scrypt
                     role='admin',
                     first_name=admin_name.split()[0],
                     last_name=admin_name.split()[-1] if len(admin_name.split()) > 1 else ''
                 )
                 db.session.add(new_admin)
-                db.session.flush()  # Flush to get the new_admin.id
+                db.session.flush()
 
-                # Create the new organization and link it to the admin
                 new_org = Organization(name=org_name, admin_id=new_admin.id)
                 db.session.add(new_org)
-                db.session.flush()  # Flush to get the new_org.id
+                db.session.flush()
 
-                # Set the organization_id for the new admin user
                 new_admin.organization_id = new_org.id
-
-                # Commit all changes
                 db.session.commit()
                 flash(f'Organization {org_name} created successfully!')
             else:
