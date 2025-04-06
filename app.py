@@ -4,18 +4,21 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import os
+from populate_db import populate_db  # Import the populate_db function
 
 app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key')
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://dpat_db_user:zdZVlEdjMOqzHv8ofBIAhPaONUxs43BY@dpg-cvped8je5dus73cfmsvg-a.virginia-postgres.render.com/dpat_db'
+app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key')  # Use environment variable for security
+
+# Database configuration for Render PostgreSQL
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://dpat_db_user:zdZVlEdjMOqzHv8ofBIAhPaONUxs43BY@dpg-cvped8je5dus73cfmsvg-a.virginia-postgres.render.com/dpat_db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+print(f"Database URI: {app.config['SQLALCHEMY_DATABASE_URI']}")
 db = SQLAlchemy(app)
 
 # Flask-Login setup
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'sign_in'
-
 
 # User model
 class User(UserMixin, db.Model):
@@ -30,7 +33,6 @@ class User(UserMixin, db.Model):
     def get_id(self):
         return str(self.id)
 
-
 # Organization model
 class Organization(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -41,7 +43,6 @@ class Organization(db.Model):
     admin = db.relationship('User', backref='organization_admin', uselist=False, foreign_keys=[admin_id])
     users = db.relationship('User', backref='organization', foreign_keys='User.organization_id')
 
-
 # Assessment score model
 class AssessmentScore(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -49,7 +50,6 @@ class AssessmentScore(db.Model):
     score = db.Column(db.Integer, nullable=False)
     date_taken = db.Column(db.DateTime, default=db.func.current_timestamp())
     user = db.relationship('User', backref='assessment_scores')
-
 
 # To-Do Item model
 class ToDoItem(db.Model):
@@ -63,26 +63,19 @@ class ChecklistItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     key = db.Column(db.String(50), unique=True, nullable=False)  # e.g., 'lawful_basis_identified'
     description = db.Column(db.String(200), nullable=False)  # e.g., 'Identify and document lawful basis for data processing'
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-
-# Initialize database and add sysadmin user if not exists
-def init_db():
-    with app.app_context():
-        db.create_all()
-        # Check if sysadmin exists, add if not
-        if not User.query.filter_by(email='sysadmin@dpat.org').first():
-            sysadmin = User(
-                email='sysadmin@dpat.org',
-                password=generate_password_hash('sysadminpass'),
-                role='sysadmin'
-            )
-            db.session.add(sysadmin)
-            db.session.commit()
-            print("Sysadmin user created!")
-
+# Temporary endpoint to initialize the database
+@app.route('/init-db', methods=['GET'])
+def init_database():
+    try:
+        populate_db()  # Call the populate_db function from populate_db.py
+        return "Database initialized successfully!", 200
+    except Exception as e:
+        return f"Error initializing database: {str(e)}", 500
 
 # Routes
 @app.route('/')
@@ -91,7 +84,6 @@ def home():
         flash('Access denied. System Admin can only access System Manager.')
         return redirect(url_for('sys_manager'))
     return render_template('home.html')
-
 
 @app.route('/sign_in', methods=['GET', 'POST'])
 def sign_in():
@@ -108,13 +100,11 @@ def sign_in():
             flash('Login credentials failed.')
     return render_template('sign_in.html')
 
-
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('home'))
-
 
 @app.route('/dashboard')
 @login_required
@@ -142,7 +132,6 @@ def dashboard():
                            days_remaining=days_remaining,
                            is_admin=is_admin)
 
-
 @app.route('/set_goal_date', methods=['POST'])
 @login_required
 def set_goal_date():
@@ -166,7 +155,6 @@ def set_goal_date():
 
         return jsonify({'days_remaining': days_remaining})
     return jsonify({'error': 'Organization not found'}), 404
-
 
 @app.route('/assessment', methods=['GET', 'POST'])
 @login_required
@@ -202,7 +190,6 @@ def assessment():
         return redirect(url_for('results_user', score=score))
     return render_template('assessment.html')
 
-
 @app.route('/results_user')
 @login_required
 def results_user():
@@ -211,7 +198,6 @@ def results_user():
         return redirect(url_for('sys_manager'))
     score = request.args.get('score', default=0, type=int)
     return render_template('results_user.html', score=score)
-
 
 @app.route('/results_admin')
 @login_required
@@ -228,7 +214,6 @@ def results_admin():
     avg_score = sum(score.score for score in scores) / len(scores) if scores else 0
     return render_template('results_admin.html', avg_score=f"{avg_score:.1f}%", users=users_data)
 
-
 @app.route('/library')
 @login_required
 def library():
@@ -236,7 +221,6 @@ def library():
         flash('Access denied. System Admin can only access System Manager.')
         return redirect(url_for('sys_manager'))
     return render_template('library.html')
-
 
 @app.route('/breach_info')
 @login_required
@@ -246,7 +230,6 @@ def breach_info():
         return redirect(url_for('sys_manager'))
     return render_template('breach_info.html')
 
-
 @app.route('/risks_bp')
 @login_required
 def risks_bp():
@@ -255,7 +238,6 @@ def risks_bp():
         return redirect(url_for('sys_manager'))
     return render_template('risks_bp.html')
 
-
 @app.route('/org_manager', methods=['GET', 'POST'])
 @login_required
 def org_manager():
@@ -263,11 +245,6 @@ def org_manager():
         flash('Access denied. System Admin can only access System Manager.')
         return redirect(url_for('sys_manager'))
     elif current_user.role != 'admin':
-        flash('Access denied. Only admins can manage organizations.')
-        return redirect(url_for('dashboard'))
-
-    # Restrict access to non-admin users
-    if current_user.role != 'admin':
         flash('Access denied. Only admins can manage organizations.')
         return redirect(url_for('dashboard'))
 
@@ -350,7 +327,6 @@ def org_manager():
         organization_name=organization_name
     )
 
-
 @app.route('/update_role', methods=['POST'])
 @login_required
 def update_role():
@@ -371,7 +347,6 @@ def update_role():
     else:
         flash("User not found.")
     return redirect(url_for('org_manager'))
-
 
 @app.route('/sys_manager', methods=['GET', 'POST'])
 @login_required
@@ -429,7 +404,6 @@ def sys_manager():
 
     organizations = Organization.query.all()
     return render_template('sys_manager.html', organizations=organizations)
-
 
 @app.route('/checklist', methods=['GET', 'POST'])
 @login_required
@@ -503,7 +477,6 @@ def checklist():
         flash('Checklist saved successfully!', 'success')
         return redirect(url_for('to_do_list'))
     return render_template('checklist.html')
-
 
 @app.route('/to_do_list')
 @login_required
@@ -585,9 +558,14 @@ def remove_todo(todo_id):
 
     flash('Task removed successfully!', 'success')
     return redirect(url_for('to_do_list'))
+
 @app.route('/complete_todo/<int:todo_id>', methods=['POST'])
 @login_required
 def complete_todo(todo_id):
+    if current_user.email == 'sysadmin@dpat.org':
+        flash('Access denied. System Admin can only access System Manager.')
+        return redirect(url_for('sys_manager'))
+
     todo = ToDoItem.query.get_or_404(todo_id)
     if todo.organization_id != current_user.organization_id:
         flash('Unauthorized access to todo item.')
@@ -597,12 +575,10 @@ def complete_todo(todo_id):
     flash('Task marked as completed!')
     return redirect(url_for('to_do_list'))
 
-
 @app.route('/forgot_password')
 def forgot_password():
     flash('Forgot password functionality is not yet implemented.')
     return redirect(url_for('sign_in'))
-
 
 @app.route('/consequences_bp')
 @login_required
@@ -612,7 +588,5 @@ def consequences_bp():
         return redirect(url_for('sys_manager'))
     return render_template('consequences_bp.html')
 
-
 if __name__ == '__main__':
-    init_db()  # Initialize database before running
     app.run(debug=True)
